@@ -8,6 +8,10 @@
 </template>
 
 <script>
+// axios
+import axios from 'axios';
+
+// components
 import TodoCard from "./components/todo-card.vue";
 
 export default {
@@ -18,19 +22,17 @@ export default {
   data: function () {
     return {
       someText: "hello my name is dan",
-      todoItems: [
-        {todo: 'Do the washing up'},
-        {todo: 'take out the bins'},
-        {todo: 'clean bathroom'},
-        {todo: 'feed cats'},
-      ] 
+      todoItems: []
     };
   },
   methods: {},
   mounted: function () {
-    setTimeout(() => {
-      this.someText = "no my name is james";
-    }, 5000);
+    const axiosInstance = axios.get('http://localhost:8000/todo-item');
+    axiosInstance.then((response) => {
+      this.todoItems = response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
   },
 };
 </script>
